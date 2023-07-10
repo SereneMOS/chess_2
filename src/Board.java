@@ -1,0 +1,22 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Board {
+    private final int ROWS;
+    private final int COL;
+    HashMap<ArrayList, String> board = new HashMap<>();
+
+    public Board(int rows, int columns) {
+        this.ROWS = rows;
+        this.COL = columns;
+        //create an empty board of the provided dimensions
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COL; j++) {
+                ArrayList<Integer> coords = new ArrayList<>();
+                coords.add(i);
+                coords.add(j);
+                board.put(coords, ".");
+            }
+        }
+    }
+}
