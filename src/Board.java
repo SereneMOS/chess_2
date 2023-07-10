@@ -18,5 +18,25 @@ public class Board {
                 board.put(coords, ".");
             }
         }
+
+    }
+
+    public HashMap<ArrayList, String> getBoard() {
+        return board;
+    }
+
+    public String toString() {
+        StringBuilder printer = new StringBuilder();
+        for (int i = 0; i < this.ROWS; i++) {
+            for (int j = 0; j < this.COL; j++) {
+                ArrayList<Integer> coords = new ArrayList<>();
+                coords.add(i);
+                coords.add(j);
+                printer.append(board.get(coords));
+                printer.append(" ");
+            }
+            printer.append("\n");
+        }
+        return printer.toString();
     }
 }
