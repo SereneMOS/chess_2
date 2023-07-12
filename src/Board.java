@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Board {
+    /**
+     * Class defining the board
+     * Methods for populating the board with pieces and toString
+     * Rosaline Flowers
+     */
     private final int ROWS;
     private final int COL;
     HashMap<ArrayList, String> board = new HashMap<>();
@@ -18,7 +23,65 @@ public class Board {
                 board.put(coords, ".");
             }
         }
-
+        ArrayList<Integer> place = new ArrayList<>();
+        place.add(0); place.add(0);
+        board.replace(place, "R");
+        place.clear();
+        place.add(0); place.add(1);
+        board.replace(place, "K");
+        place.clear();
+        place.add(0); place.add(2);
+        board.replace(place, "B");
+        place.clear();
+        place.add(0); place.add(3);
+        board.replace(place, "Q");
+        place.clear();
+        place.add(0); place.add(4);
+        board.replace(place, "J");
+        place.clear();
+        place.add(0); place.add(5);
+        board.replace(place, "B");
+        place.clear();
+        place.add(0); place.add(6);
+        board.replace(place, "K");
+        place.clear();
+        place.add(0); place.add(7);
+        board.replace(place, "R");
+        place.clear();
+        for (int p = 0; p < 8; p++) {
+            place.add(1); place.add(p);
+            board.replace(place, "P");
+            place.clear();
+        }
+        place.add(7); place.add(0);
+        board.replace(place, "R");
+        place.clear();
+        place.add(7); place.add(1);
+        board.replace(place, "K");
+        place.clear();
+        place.add(7); place.add(2);
+        board.replace(place, "B");
+        place.clear();
+        place.add(7); place.add(3);
+        board.replace(place, "Q");
+        place.clear();
+        place.add(7); place.add(4);
+        board.replace(place, "J");
+        place.clear();
+        place.add(7); place.add(5);
+        board.replace(place, "B");
+        place.clear();
+        place.add(7); place.add(6);
+        board.replace(place, "K");
+        place.clear();
+        place.add(7); place.add(7);
+        board.replace(place, "R");
+        place.clear();
+        for (int p = 0; p < 8; p++) {
+            place.add(6); place.add(p);
+            board.replace(place, "P");
+            place.clear();
+        }
     }
 
     public HashMap<ArrayList, String> getBoard() {

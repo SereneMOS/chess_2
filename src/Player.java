@@ -37,7 +37,7 @@ public class Player {
         startingPieces.add("B");
         startingPieces.add("B");
         startingPieces.add("Q");
-        startingPieces.add("K");
+        startingPieces.add("J");
         return startingPieces;
     }
 
