@@ -9,7 +9,7 @@ public class Board {
      */
     private final int ROWS;
     private final int COL;
-    HashMap<ArrayList, String> board = new HashMap<>();
+    HashMap<ArrayList<Integer>, String> board = new HashMap<>();
 
     public Board(int rows, int columns) {
         this.ROWS = rows;
@@ -84,7 +84,7 @@ public class Board {
         }
     }
 
-    public HashMap<ArrayList, String> getBoard() {
+    public HashMap<ArrayList<Integer>, String> getBoard() {
         return board;
     }
 
@@ -96,7 +96,6 @@ public class Board {
                 coords.add(i);
                 coords.add(j);
                 printer.append(board.get(coords));
-                printer.append(" ");
             }
             printer.append("\n");
         }
