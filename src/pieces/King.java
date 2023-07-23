@@ -1,11 +1,16 @@
 package pieces;
 
-public class King {
-    public King() {
+import java.util.ArrayList;
 
+public class King implements PiecesInterface{
+    private final String color;
+
+    public King(String color) {
+        this.color = color;
     }
 
-    public boolean valid_king_move() {
+    @Override
+    public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation) {
         return false;
     }
 }

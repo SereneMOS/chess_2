@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
-    //TODO Get pieces to move on the board
     //TODO add the black pieces in
     Image space = new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/space_3.png")));
     Image white_pawn = new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/white_pawn.png")));

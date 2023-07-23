@@ -2,13 +2,15 @@ package pieces;
 
 import java.util.ArrayList;
 
-public class Bishop {
-    public Bishop() {
+public class Bishop implements PiecesInterface{
+    private final String color;
 
+    public Bishop(String color) {
+        this.color = color;
     }
 
-    public boolean valid_bishop_move(ArrayList<Integer> space_moved_to) {
+    @Override
+    public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation) {
         return false;
     }
-
 }

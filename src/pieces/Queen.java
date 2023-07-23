@@ -1,11 +1,16 @@
 package pieces;
 
-public class Queen {
-    public Queen() {
+import java.util.ArrayList;
 
+public class Queen implements PiecesInterface{
+    private final String color;
+
+    public Queen(String color) {
+        this.color = color;
     }
 
-    public boolean valid_queen_move() {
+    @Override
+    public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation) {
         return false;
     }
 }
