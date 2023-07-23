@@ -1,3 +1,5 @@
+import pieces.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,7 +11,7 @@ public class Board {
      */
     private final int ROWS;
     private final int COL;
-    HashMap<ArrayList<Integer>, String> board = new HashMap<>();
+    HashMap<ArrayList<Integer>, PiecesInterface> board = new HashMap<>();
 
     public Board(int rows, int columns) {
         this.ROWS = rows;
@@ -20,71 +22,71 @@ public class Board {
                 ArrayList<Integer> coords = new ArrayList<>();
                 coords.add(i);
                 coords.add(j);
-                board.put(coords, ".");
+                board.put(coords, new EmptySpace());
             }
         }
         ArrayList<Integer> place = new ArrayList<>();
         place.add(0); place.add(0);
-        board.replace(place, "R");
+        board.replace(place, new Rook("white"));
         place.clear();
         place.add(0); place.add(1);
-        board.replace(place, "K");
+        board.replace(place, new Knight("white"));
         place.clear();
         place.add(0); place.add(2);
-        board.replace(place, "B");
+        board.replace(place, new Bishop("white"));
         place.clear();
         place.add(0); place.add(3);
-        board.replace(place, "Q");
+        board.replace(place, new Queen("white"));
         place.clear();
         place.add(0); place.add(4);
-        board.replace(place, "J");
+        board.replace(place, new Knight("white"));
         place.clear();
         place.add(0); place.add(5);
-        board.replace(place, "B");
+        board.replace(place, new Bishop("white"));
         place.clear();
         place.add(0); place.add(6);
-        board.replace(place, "K");
+        board.replace(place, new Knight("white"));
         place.clear();
         place.add(0); place.add(7);
-        board.replace(place, "R");
+        board.replace(place, new Bishop("white"));
         place.clear();
         for (int p = 0; p < 8; p++) {
             place.add(1); place.add(p);
-            board.replace(place, "P");
+            board.replace(place, new Pawn("white"));
             place.clear();
         }
         place.add(7); place.add(0);
-        board.replace(place, "R");
+        board.replace(place, new Rook("black"));
         place.clear();
         place.add(7); place.add(1);
-        board.replace(place, "K");
+        board.replace(place, new Knight("black"));
         place.clear();
         place.add(7); place.add(2);
-        board.replace(place, "B");
+        board.replace(place, new Bishop("black"));
         place.clear();
         place.add(7); place.add(3);
-        board.replace(place, "Q");
+        board.replace(place, new Queen("black"));
         place.clear();
         place.add(7); place.add(4);
-        board.replace(place, "J");
+        board.replace(place, new King("black"));
         place.clear();
         place.add(7); place.add(5);
-        board.replace(place, "B");
+        board.replace(place, new Bishop("black"));
         place.clear();
         place.add(7); place.add(6);
-        board.replace(place, "K");
+        board.replace(place, new Knight("black"));
         place.clear();
         place.add(7); place.add(7);
-        board.replace(place, "R");
+        board.replace(place, new Rook("black"));
         place.clear();
         for (int p = 0; p < 8; p++) {
             place.add(6); place.add(p);
-            board.replace(place, "P");
+            board.replace(place, new Pawn("black"));
             place.clear();
         }
     }
 
-    public HashMap<ArrayList<Integer>, String> getBoard() {
+    public HashMap<ArrayList<Integer>, PiecesInterface> getBoard() {
         return board;
     }
 
