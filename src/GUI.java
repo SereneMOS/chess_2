@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
-    //TODO make each piece according to its constraints
     //TODO make pieces able to capture each other (except for ones on the same team)
     //TODO create a turn order, probably need to do that in Board
     //TODO establish win condition (checkmate)
@@ -46,11 +45,11 @@ public class GUI extends Application {
             }
             button.setOnAction(event -> {
                 //if no space has been previously selected, the button's values populate the coordinates and button
-                if (selectedCoordinates == null) {
+                if (selectedCoordinates == null && !Objects.equals(boardValues.get(val).getValue(), ".")) {
                     selectedCoordinates = val;
                     selectedButton = button;
                     System.out.println(selectedCoordinates);
-                } else {
+                } else if (selectedCoordinates != null) {
                     //if the previously selected button was not an empty space and
                     //the newly selected space IS an empty space
                     if (!Objects.equals(boardValues.get(selectedCoordinates).getValue(), ".") &&
