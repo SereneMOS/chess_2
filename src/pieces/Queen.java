@@ -21,7 +21,8 @@ public class Queen implements PiecesInterface {
     public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation) {
         if ((outgoingLocation.get(0) - incomingLocation.get(0) == 0 && outgoingLocation.get(1) - incomingLocation.get(1) !=0)
                 || (outgoingLocation.get(1) - incomingLocation.get(1) == 0 && outgoingLocation.get(0) - incomingLocation.get(0) != 0)
-         || (outgoingLocation.get(0) - incomingLocation.get(0)) == (outgoingLocation.get(1) - incomingLocation.get(1))) {
+         || (outgoingLocation.get(0) - incomingLocation.get(0)) == (outgoingLocation.get(1) - incomingLocation.get(1))
+         || (incomingLocation.get(0) - outgoingLocation.get(0)) == -1 * (incomingLocation.get(1) - outgoingLocation.get(1))) {
             return true;
         }
         return false;

@@ -21,9 +21,9 @@ public class Pawn implements PiecesInterface {
     public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation) {
         //this configuration doesn't currently account for the first turn, two spaces rule
         if (Objects.equals(color, "white")) {
-            return incomingLocation.get(0) - outgoingLocation.get(0) == 1;
+            return outgoingLocation.get(0) - incomingLocation.get(0) == 1;
         } else if (Objects.equals(color, "black")) {
-            return outgoingLocation.get(1) - incomingLocation.get(0) == 1;
+            return outgoingLocation.get(0) - incomingLocation.get(0) == -1;
         }
         return false;
     }
