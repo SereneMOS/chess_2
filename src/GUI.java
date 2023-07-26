@@ -16,8 +16,10 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
+    //TODO stop the King from fucking teleporting lol
+    //TODO prevent pieces other than the Knight from jumping over one another
     //TODO make pieces able to capture each other (except for ones on the same team)
-    //TODO create a turn order, probably need to do that in Board
+    //TODO create a turn order, probably need to do that in Board or create a unique Game class (or use Main, idk)
     //TODO establish win condition (checkmate)
 
     ArrayList<Integer> selectedCoordinates = null;
@@ -53,7 +55,7 @@ public class GUI extends Application {
                     //if the previously selected button was not an empty space and
                     //the newly selected space IS an empty space
                     if (!Objects.equals(boardValues.get(selectedCoordinates).getValue(), ".") &&
-                            Objects.equals(current.getValue(), ".")) {
+                            Objects.equals(boardValues.get(val).getValue(), ".")) {
                         if (boardValues.get(selectedCoordinates).isValidMove(selectedCoordinates, val)) {
                             //swap the values of the two spaces in the hashmap
                             boardValues.replace(val, boardValues.get(selectedCoordinates));
@@ -73,10 +75,10 @@ public class GUI extends Application {
                             selectedButton = null;
                         } else {
                             System.out.println("Invalid move");
-                            selectedCoordinates = null;
-                            selectedButton = null;
                         }
                     }
+                } else if (Objects.equals(boardValues.get(val).getValue(), ".")) {
+                    System.out.println("Skempty space lol");
                 }
             });
             //note that the row/col are swapped here
