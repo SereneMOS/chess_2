@@ -19,11 +19,13 @@ public class King implements PiecesInterface {
 
     @Override
     public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation) {
-        if (Objects.equals(color, "white")) {
-            if (outgoingLocation.get(0) - incomingLocation.get(0) == 1 || outgoingLocation.get(0) - incomingLocation.get(0) == -1
-             || outgoingLocation.get(1) - incomingLocation.get(1) == 1 || outgoingLocation.get(1) - incomingLocation.get(1) == -1) {
-                return true;
-            }
+                //upwards and downwards movement
+        if (((outgoingLocation.get(0) - incomingLocation.get(0) == 1 || outgoingLocation.get(0) - incomingLocation.get(0) == -1)
+                && (outgoingLocation.get(1) - incomingLocation.get(1) <= 1) && (outgoingLocation.get(1) - incomingLocation.get(1) >= -1))
+                //left and right movement
+                || (outgoingLocation.get(1) - incomingLocation.get(1) == 1 && outgoingLocation.get(0) - incomingLocation.get(0) == 0)
+                || (outgoingLocation.get(1) - incomingLocation.get(1) == -1 && outgoingLocation.get(0) - incomingLocation.get(0) == 0)) {
+            return true;
         }
         return false;
     }

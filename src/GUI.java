@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
-    //TODO stop the King from fucking teleporting lol
     //TODO prevent pieces other than the Knight from jumping over one another
     //TODO make pieces able to capture each other (except for ones on the same team)
     //TODO create a turn order, probably need to do that in Board or create a unique Game class (or use Main, idk)
