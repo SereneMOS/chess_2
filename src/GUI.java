@@ -16,7 +16,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
-    //TODO prevent pieces other than the Knight from jumping over one another
+    //TODO prevent pieces other than the Knight from jumping over one another, will likely need to modify the isValidMove method
+    //TODO allow users to deselect a piece
     //TODO make pieces able to capture each other (except for ones on the same team)
     //TODO create a turn order, probably need to do that in Board or create a unique Game class (or use Main, idk)
     //TODO establish win condition (checkmate)
@@ -55,7 +56,7 @@ public class GUI extends Application {
                     //the newly selected space IS an empty space
                     if (!Objects.equals(boardValues.get(selectedCoordinates).getValue(), ".") &&
                             Objects.equals(boardValues.get(val).getValue(), ".")) {
-                        if (boardValues.get(selectedCoordinates).isValidMove(selectedCoordinates, val)) {
+                        if (boardValues.get(selectedCoordinates).isValidMove(selectedCoordinates, val, boardValues)) {
                             //swap the values of the two spaces in the hashmap
                             boardValues.replace(val, boardValues.get(selectedCoordinates));
                             boardValues.replace(selectedCoordinates, new EmptySpace());
@@ -77,7 +78,7 @@ public class GUI extends Application {
                         }
                     }
                 } else if (Objects.equals(boardValues.get(val).getValue(), ".")) {
-                    System.out.println("Skempty space lol");
+                    System.out.println("Empty space");
                 }
             });
             //note that the row/col are swapped here
