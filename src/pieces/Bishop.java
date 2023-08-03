@@ -20,8 +20,28 @@ public class Bishop implements PiecesInterface {
 
     @Override
     public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
-        if ((outgoingLocation.get(0) - incomingLocation.get(0)) == (outgoingLocation.get(1) - incomingLocation.get(1))
-         || (incomingLocation.get(0) - outgoingLocation.get(0)) == -1 * (incomingLocation.get(1) - outgoingLocation.get(1))) {
+        // "\" movement
+        if ((outgoingLocation.get(0) - incomingLocation.get(0)) == (outgoingLocation.get(1) - incomingLocation.get(1))) {
+            return true;
+        // "/" movement
+        } else if ((incomingLocation.get(0) - outgoingLocation.get(0)) == -1 * (incomingLocation.get(1) - outgoingLocation.get(1))) {
+            //upward and right
+            if (incomingLocation.get(0) < outgoingLocation.get(0)) {
+                int x = outgoingLocation.get(1);
+                for (int i = outgoingLocation.get(0) - 1; i > incomingLocation.get(0); i--) {
+                    ArrayList<Integer> current = new ArrayList<>();
+                    current.add(i);
+                    x++;
+                    current.add(x);
+                    if (!Objects.equals(board.get(current).getValue(), ".")) {
+                        return false;
+                    }
+                }
+                return true;
+            //downward and left
+            } else if (incomingLocation.get(0) > outgoingLocation.get(0)) {
+                System.out.println("poop");
+            }
             return true;
         }
         return false;

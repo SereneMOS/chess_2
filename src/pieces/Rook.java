@@ -50,7 +50,7 @@ public class Rook implements PiecesInterface {
                 for (int i = outgoingLocation.get(0) + 1; i < incomingLocation.get(0); i++) {
                     ArrayList<Integer> current = new ArrayList<>();
                     current.add(i);
-                    current.add(outgoingLocation.get(1));
+                    current.add(outgoingLocation.get(1) + i);
                     if (!Objects.equals(board.get(current).getValue(), ".")) {
                         return false;
                     }
