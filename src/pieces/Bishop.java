@@ -22,8 +22,30 @@ public class Bishop implements PiecesInterface {
     public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
         // "\" movement
         if ((outgoingLocation.get(0) - incomingLocation.get(0)) == (outgoingLocation.get(1) - incomingLocation.get(1))) {
-            return true;
-        // "/" movement
+            //upward and left
+            if (incomingLocation.get(0) < outgoingLocation.get(0)) {
+                for (int i = -1; i > incomingLocation.get(0) - outgoingLocation.get(0); i--) {
+                    ArrayList<Integer> current = new ArrayList<>();
+                    current.add(outgoingLocation.get(0) + i);
+                    current.add(outgoingLocation.get(1) + i);
+                    if (!Objects.equals(board.get(current).getValue(), ".")) {
+                        return false;
+                    }
+                }
+                return true;
+                //downward and right
+            } else if (incomingLocation.get(0) > outgoingLocation.get(0)) {
+                for (int i = 1; i < incomingLocation.get(0) - outgoingLocation.get(0); i++) {
+                    ArrayList<Integer> current = new ArrayList<>();
+                    current.add(outgoingLocation.get(0) + i);
+                    current.add(outgoingLocation.get(1) + i);
+                    if (!Objects.equals(board.get(current).getValue(), ".")) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            // "/" movement
         } else if ((incomingLocation.get(0) - outgoingLocation.get(0)) == -1 * (incomingLocation.get(1) - outgoingLocation.get(1))) {
             //upward and right
             if (incomingLocation.get(0) < outgoingLocation.get(0)) {
@@ -40,9 +62,18 @@ public class Bishop implements PiecesInterface {
                 return true;
             //downward and left
             } else if (incomingLocation.get(0) > outgoingLocation.get(0)) {
-                System.out.println("poop");
+                int x = outgoingLocation.get(1);
+                for (int i = outgoingLocation.get(0) + 1; i < incomingLocation.get(0); i++) {
+                    ArrayList<Integer> current = new ArrayList<>();
+                    current.add(i);
+                    x--;
+                    current.add(x);
+                    if (!Objects.equals(board.get(current).getValue(), ".")) {
+                        return false;
+                    }
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }
