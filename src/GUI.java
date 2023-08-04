@@ -16,8 +16,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
-    //TODO prevent pieces other than the Knight from jumping over one another, will likely need to modify the isValidMove method
-    //TODO allow users to deselect a piece
     //TODO make pieces able to capture each other (except for ones on the same team)
     //TODO create a turn order, probably need to do that in Board or create a unique Game class (or use Main, idk)
     //TODO establish win condition (checkmate)
@@ -51,6 +49,10 @@ public class GUI extends Application {
                     selectedCoordinates = val;
                     selectedButton = button;
                     System.out.println(selectedCoordinates);
+                } else if (selectedCoordinates == val) {
+                    selectedCoordinates = null;
+                    selectedButton = null;
+                    System.out.println("Deselected");
                 } else if (selectedCoordinates != null) {
                     //if the previously selected button was not an empty space and
                     //the newly selected space IS an empty space
