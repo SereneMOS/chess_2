@@ -1,22 +1,16 @@
 import javafx.application.Application;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
 import pieces.EmptySpace;
 import pieces.PiecesInterface;
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
-    //TODO make pieces able to capture each other (except for ones on the same team)
     //TODO create a turn order, probably need to do that in Board or create a unique Game class (or use Main, idk)
     //TODO establish win condition (checkmate)
 
@@ -44,21 +38,21 @@ public class GUI extends Application {
                 button.setGraphic(current.getGraphic(""));
             }
             button.setOnAction(event -> {
-                //if no space has been previously selected, the button's values populate the coordinates and button
                 if (selectedCoordinates == null && !Objects.equals(boardValues.get(val).getValue(), ".")) {
+                    //if no space has been previously selected, the button's values populate the coordinates and button
                     selectedCoordinates = val;
                     selectedButton = button;
                     System.out.println(selectedCoordinates);
                 } else if (selectedCoordinates == val) {
+                    //deselect the current piece/button
                     selectedCoordinates = null;
                     selectedButton = null;
                     System.out.println("Deselected");
                 } else if (selectedCoordinates != null) {
-                    //if the previously selected button was not an empty space and
-                    //the newly selected space IS an empty space
-                    if (!Objects.equals(boardValues.get(selectedCoordinates).getValue(), ".") &&
-                            Objects.equals(boardValues.get(val).getValue(), ".")) {
-                        if (boardValues.get(selectedCoordinates).isValidMove(selectedCoordinates, val, boardValues)) {
+                    if (boardValues.get(selectedCoordinates).isValidMove(selectedCoordinates, val, boardValues)) {
+                        //if the selected location has a piece already, then it will be replaced if that piece is not the same color
+                        if (!Objects.equals(boardValues.get(selectedCoordinates).getColor(), boardValues.get(val).getColor())) {
+                            button.setGraphic(boardValues.get(val).getGraphic(boardValues.get(selectedCoordinates).getColor()));
                             //swap the values of the two spaces in the hashmap
                             boardValues.replace(val, boardValues.get(selectedCoordinates));
                             boardValues.replace(selectedCoordinates, new EmptySpace());
@@ -69,15 +63,17 @@ public class GUI extends Application {
                                 button.setGraphic(boardValues.get(val).getGraphic("black"));
                             }
                             //when a space is selected, the originally selected button needs to update to an empty space
-                            selectedButton.setGraphic(boardValues.get(selectedCoordinates).getGraphic("white"));
+                            selectedButton.setGraphic(boardValues.get(selectedCoordinates).getGraphic("none"));
                             System.out.println("Original cell: " + selectedCoordinates + " , " + boardValues.get(selectedCoordinates));
                             System.out.println("Destination cell: " + val + " , " + boardValues.get(val));
                             //clear the values of the selectedCoordinates and selectedButton
                             selectedCoordinates = null;
                             selectedButton = null;
                         } else {
-                            System.out.println("Invalid move");
+                            System.out.println("Choose another piece");
                         }
+                    } else {
+                        System.out.println("Invalid move");
                     }
                 } else if (Objects.equals(boardValues.get(val).getValue(), ".")) {
                     System.out.println("Empty space");
