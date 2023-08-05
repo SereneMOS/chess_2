@@ -11,12 +11,10 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
-    //TODO create a turn order, probably need to do that in Board or create a unique Game class (or use Main, idk)
     //TODO establish win condition (checkmate)
 
     ArrayList<Integer> selectedCoordinates = null;
     Button selectedButton = null;
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -40,9 +38,13 @@ public class GUI extends Application {
             button.setOnAction(event -> {
                 if (selectedCoordinates == null && !Objects.equals(boardValues.get(val).getValue(), ".")) {
                     //if no space has been previously selected, the button's values populate the coordinates and button
-                    selectedCoordinates = val;
-                    selectedButton = button;
-                    System.out.println(selectedCoordinates);
+                    if (Objects.equals(boardValues.get(val).getColor(), board.getTurn())) {
+                        selectedCoordinates = val;
+                        selectedButton = button;
+                        System.out.println(selectedCoordinates);
+                    } else {
+                        System.out.println("Its not that color's turn, idiot");
+                    }
                 } else if (selectedCoordinates == val) {
                     //deselect the current piece/button
                     selectedCoordinates = null;
@@ -69,6 +71,7 @@ public class GUI extends Application {
                             //clear the values of the selectedCoordinates and selectedButton
                             selectedCoordinates = null;
                             selectedButton = null;
+                            board.changeTurn();
                         } else {
                             System.out.println("Choose another piece");
                         }

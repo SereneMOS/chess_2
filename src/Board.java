@@ -2,6 +2,7 @@ import pieces.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Board {
     /**
@@ -12,6 +13,7 @@ public class Board {
     private final int ROWS;
     private final int COL;
     HashMap<ArrayList<Integer>, PiecesInterface> board = new HashMap<>();
+    private String turn;
 
     public Board(int rows, int columns) {
         this.ROWS = rows;
@@ -84,10 +86,23 @@ public class Board {
             board.replace(place, new Pawn("white"));
             place.clear();
         }
+        turn = "white";
     }
 
     public HashMap<ArrayList<Integer>, PiecesInterface> getBoard() {
         return board;
+    }
+
+    public void changeTurn() {
+        if (Objects.equals(turn, "white")) {
+            turn = "black";
+        } else if (Objects.equals(turn, "black")) {
+            turn = "white";
+        }
+    }
+
+    public String getTurn() {
+        return turn;
     }
 
     public String toString() {
