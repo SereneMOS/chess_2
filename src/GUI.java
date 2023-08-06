@@ -1,8 +1,11 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pieces.EmptySpace;
 import pieces.PiecesInterface;
@@ -11,17 +14,23 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
+    //TODO create a more expansive GUI, with turn order, pieces captured, and a title
+    //TODO update documentation and styling across the project
     //TODO establish win condition (checkmate)
+    //TODO modify the gui and button's graphics to be more consistent with a real chess board
+    //TODO add in the pawn's first move double jump rule
 
     ArrayList<Integer> selectedCoordinates = null;
     Button selectedButton = null;
+    Board board = new Board(8,8);
+    HashMap<ArrayList<Integer>, PiecesInterface> boardValues = board.getBoard();
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Stage stage = new Stage();
         GridPane center = new GridPane();
-        Board board = new Board(8,8);
-        HashMap<ArrayList<Integer>, PiecesInterface> boardValues = board.getBoard();
+        Label turnLabel = new Label("Current turn: " + board.getTurn());
         //loops through every value in the boardValues hashMap and provides them a button
         for (ArrayList<Integer> val : boardValues.keySet()) {
             PiecesInterface current = boardValues.get(val);
@@ -43,7 +52,7 @@ public class GUI extends Application {
                         selectedButton = button;
                         System.out.println(selectedCoordinates);
                     } else {
-                        System.out.println("Its not that color's turn, idiot");
+                        System.out.println("Other color's turn");
                     }
                 } else if (selectedCoordinates == val) {
                     //deselect the current piece/button
@@ -72,6 +81,7 @@ public class GUI extends Application {
                             selectedCoordinates = null;
                             selectedButton = null;
                             board.changeTurn();
+                            turnLabel.setText("Current turn: " + board.getTurn());
                         } else {
                             System.out.println("Choose another piece");
                         }
@@ -87,7 +97,10 @@ public class GUI extends Application {
             center.setHgap(11);
             center.setVgap(11);
         }
+        VBox currentTurn = new VBox();
+        currentTurn.getChildren().add(turnLabel);
         BorderPane borderPane = new BorderPane(center);
+        borderPane.setRight(currentTurn);
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.show();
