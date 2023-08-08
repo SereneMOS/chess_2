@@ -43,8 +43,7 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         //stage and title
-        Stage stage = new Stage();
-        stage.setTitle("Chess 2");
+        primaryStage.setTitle("Chess 2");
         //center grid pane which contains the actual chess board
         GridPane center = new GridPane();
         center.setHgap(11);
@@ -59,6 +58,7 @@ public class GUI extends Application {
         recentMoves.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         FlowPane movesList = new FlowPane();
         movesList.setOrientation(Orientation.VERTICAL);
+        Label winnerLabel = new Label("");
         //content that is on the right side of the border
         FlowPane blackCapturesFlow = new FlowPane();
         blackCapturesFlow.setPrefWrapLength(150);
@@ -186,10 +186,24 @@ public class GUI extends Application {
         HBox topBox = new HBox();
         Label titleLabel = new Label("Chess 2");
         titleLabel.setTextFill(Color.BLACK);
-        topBox.getChildren().add(titleLabel);
-        topBox.setAlignment(Pos.CENTER);
         titleLabel.setUnderline(true);
         titleLabel.setFont(Font.font("Constantia", 30));
+        Button newGame = new Button("New Game");
+        newGame.setOnAction(event -> {
+            try {
+                selectedCoordinates = null;
+                selectedButton = null;
+                board = new Board(8,8);
+                boardValues = board.getBoard();
+                start(primaryStage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        topBox.setSpacing(10);
+        topBox.setAlignment(Pos.CENTER);
+        topBox.getChildren().add(titleLabel);
+        topBox.getChildren().add(newGame);
 
         //the border pane and its formatting
         BorderPane borderPane = new BorderPane(center);
@@ -202,8 +216,8 @@ public class GUI extends Application {
         BorderPane.setMargin(leftBox, new Insets(10, 20, 0, 10));
         borderPane.setBackground(new Background(new BackgroundFill(Color.DARKGOLDENROD, null ,null)));
         Scene scene = new Scene(borderPane);
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
