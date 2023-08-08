@@ -37,10 +37,10 @@ public class King implements PiecesInterface {
     }
 
     @Override
-    public ImageView getGraphic(String color) {
-        if (Objects.equals(color, "white")) {
+    public ImageView getGraphic() {
+        if (Objects.equals(this.color, "white")) {
             return new ImageView(white_king);
-        } else if (Objects.equals(color, "black")) {
+        } else if (Objects.equals(this.color, "black")) {
             return new ImageView(black_king);
         }
         return null;

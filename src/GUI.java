@@ -1,24 +1,29 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import pieces.EmptySpace;
 import pieces.PiecesInterface;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
     //TODO create a more expansive GUI, with turn order, pieces captured, and a title
+    //TODO update Player and Board so that their backend logic syncs with the GUI
     //TODO update documentation and styling across the project
     //TODO establish win condition (checkmate)
     //TODO modify the gui and button's graphics to be more consistent with a real chess board
-    //TODO add in the pawn's first move double jump rule
+    //TODO add in the pawn's first move double jump rule and diagonal only capture
 
     ArrayList<Integer> selectedCoordinates = null;
     Button selectedButton = null;
@@ -31,26 +36,29 @@ public class GUI extends Application {
         Stage stage = new Stage();
         GridPane center = new GridPane();
         Label turnLabel = new Label("Current turn: " + board.getTurn());
+        Label selectedPieceLabel = new Label("Selected Piece: None");
+        FlowPane blackCapturesFlow = new FlowPane();
+        blackCapturesFlow.setPrefWrapLength(150);
+        blackCapturesFlow.setHgap(7);
+        blackCapturesFlow.setMaxHeight(10);
+        blackCapturesFlow.setMinHeight(10);
+        FlowPane whiteCapturesFlow = new FlowPane();
+        whiteCapturesFlow.setPrefWrapLength(150);
+        whiteCapturesFlow.setHgap(7);
         //loops through every value in the boardValues hashMap and provides them a button
         for (ArrayList<Integer> val : boardValues.keySet()) {
-            PiecesInterface current = boardValues.get(val);
             Button button = new Button();
             button.setMinSize(20, 20);
             button.setMaxSize(50, 50);
-            if (Objects.equals(current.getColor(), "white")) {
-                button.setGraphic(current.getGraphic("white"));
-            } else if (Objects.equals(current.getColor(), "black")) {
-                button.setGraphic(current.getGraphic("black"));
-            } else {
-                button.setGraphic(current.getGraphic(""));
-            }
+            button.setGraphic(boardValues.get(val).getGraphic());
             button.setOnAction(event -> {
                 if (selectedCoordinates == null && !Objects.equals(boardValues.get(val).getValue(), ".")) {
                     //if no space has been previously selected, the button's values populate the coordinates and button
                     if (Objects.equals(boardValues.get(val).getColor(), board.getTurn())) {
                         selectedCoordinates = val;
                         selectedButton = button;
-                        System.out.println(selectedCoordinates);
+                        System.out.println("Selected coords" + selectedCoordinates);
+                        selectedPieceLabel.setText("Selected Piece: " + boardValues.get(val).getValue());
                     } else {
                         System.out.println("Other color's turn");
                     }
@@ -59,29 +67,34 @@ public class GUI extends Application {
                     selectedCoordinates = null;
                     selectedButton = null;
                     System.out.println("Deselected");
+                    selectedPieceLabel.setText("Selected Piece: None");
                 } else if (selectedCoordinates != null) {
+                    //runs through the selectedCoordinates movement criteria to determine if it should be allowed to move
                     if (boardValues.get(selectedCoordinates).isValidMove(selectedCoordinates, val, boardValues)) {
-                        //if the selected location has a piece already, then it will be replaced if that piece is not the same color
+                        //checks if the current incoming and outgoing pieces are the same color
                         if (!Objects.equals(boardValues.get(selectedCoordinates).getColor(), boardValues.get(val).getColor())) {
-                            button.setGraphic(boardValues.get(val).getGraphic(boardValues.get(selectedCoordinates).getColor()));
+                            if (Objects.equals(boardValues.get(val).getColor(), "white")) {
+                                blackCapturesFlow.getChildren().add(boardValues.get(val).getGraphic());
+                            } else if (Objects.equals(boardValues.get(val).getColor(), "black")) {
+                                whiteCapturesFlow.getChildren().add(boardValues.get(val).getGraphic());
+                            }
                             //swap the values of the two spaces in the hashmap
                             boardValues.replace(val, boardValues.get(selectedCoordinates));
                             boardValues.replace(selectedCoordinates, new EmptySpace());
-                            //change the graphic of the newly selected space with that of the originally selected one
-                            if (Objects.equals(boardValues.get(val).getColor(), "white")) {
-                                button.setGraphic(boardValues.get(val).getGraphic("white"));
-                            } else if (Objects.equals(boardValues.get(val).getColor(), "black")) {
-                                button.setGraphic(boardValues.get(val).getGraphic("black"));
-                            }
+                            //update the graphic of the current button, so it is accurate
+                            button.setGraphic(boardValues.get(val).getGraphic());
                             //when a space is selected, the originally selected button needs to update to an empty space
-                            selectedButton.setGraphic(boardValues.get(selectedCoordinates).getGraphic("none"));
+                            selectedButton.setGraphic(boardValues.get(selectedCoordinates).getGraphic());
+                            //console output
                             System.out.println("Original cell: " + selectedCoordinates + " , " + boardValues.get(selectedCoordinates));
                             System.out.println("Destination cell: " + val + " , " + boardValues.get(val));
                             //clear the values of the selectedCoordinates and selectedButton
                             selectedCoordinates = null;
                             selectedButton = null;
+                            //change the turn and update labels
                             board.changeTurn();
                             turnLabel.setText("Current turn: " + board.getTurn());
+                            selectedPieceLabel.setText("Selected Piece: None");
                         } else {
                             System.out.println("Choose another piece");
                         }
@@ -97,10 +110,41 @@ public class GUI extends Application {
             center.setHgap(11);
             center.setVgap(11);
         }
-        VBox currentTurn = new VBox();
-        currentTurn.getChildren().add(turnLabel);
+        VBox rightBox = new VBox();
+        rightBox.setSpacing(200);
+        VBox blackCapturesBox = new VBox();
+        Label blackCapturesLabel = new Label("White pieces captured:");
+        blackCapturesBox.getChildren().add(blackCapturesLabel);
+        blackCapturesBox.getChildren().add(blackCapturesFlow);
+        VBox whiteCapturesBox = new VBox();
+        Label whiteCapturesLabel = new Label("Black pieces captured:");
+        whiteCapturesBox.getChildren().add(whiteCapturesLabel);
+        whiteCapturesBox.getChildren().add(whiteCapturesFlow);
+        whiteCapturesBox.setAlignment(Pos.BOTTOM_LEFT);
+        rightBox.getChildren().add(blackCapturesBox);
+        rightBox.getChildren().add(whiteCapturesBox);
+
+        VBox leftBox = new VBox();
+        leftBox.setPrefWidth(125);
+        leftBox.setFillWidth(false);
+        leftBox.getChildren().add(turnLabel);
+        leftBox.getChildren().add(selectedPieceLabel);
+
+        HBox topBox = new HBox();
+        Label titleLabel = new Label("Chess 2");
+        titleLabel.setTextFill(Color.BLACK);
+        topBox.getChildren().add(titleLabel);
+        topBox.setAlignment(Pos.CENTER);
+        titleLabel.setUnderline(true);
+        titleLabel.setFont(Font.font("Constantia", 30));
+
         BorderPane borderPane = new BorderPane(center);
-        borderPane.setRight(currentTurn);
+        BorderPane.setMargin(center, new Insets(10, 0, 10, 0));
+        borderPane.setRight(rightBox);
+        BorderPane.setMargin(rightBox, new Insets(10, 0, 0, 20));
+        borderPane.setTop(topBox);
+        borderPane.setLeft(leftBox);
+        BorderPane.setMargin(leftBox, new Insets(10, 20, 0, 10));
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.show();

@@ -15,7 +15,7 @@ public class Knight implements PiecesInterface {
 
     public Knight(String color) {
         this.color = color;
-        this.value = "Kni";
+        this.value = "Knight";
     }
 
     @Override
@@ -37,10 +37,10 @@ public class Knight implements PiecesInterface {
     }
 
     @Override
-    public ImageView getGraphic(String color) {
-        if (Objects.equals(color, "white")) {
+    public ImageView getGraphic() {
+        if (Objects.equals(this.color, "white")) {
             return new ImageView(white_knight);
-        } else if (Objects.equals(color, "black")) {
+        } else if (Objects.equals(this.color, "black")) {
             return new ImageView(black_knight);
         }
         return null;

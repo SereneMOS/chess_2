@@ -8,6 +8,6 @@ import java.util.HashMap;
 public interface PiecesInterface {
     boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation, HashMap<ArrayList<Integer>, PiecesInterface> board);
     String getColor();
-    ImageView getGraphic(String color);
+    ImageView getGraphic();
     String getValue();
 }

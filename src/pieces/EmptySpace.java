@@ -26,7 +26,7 @@ public class EmptySpace implements PiecesInterface {
     }
 
     @Override
-    public ImageView getGraphic(String color) {
+    public ImageView getGraphic() {
         return new ImageView(space);
     }
 

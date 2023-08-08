@@ -35,10 +35,10 @@ public class Pawn implements PiecesInterface {
     }
 
     @Override
-    public ImageView getGraphic(String color) {
-        if (Objects.equals(color, "white")) {
+    public ImageView getGraphic() {
+        if (Objects.equals(this.color, "white")) {
             return new ImageView(white_pawn);
-        } else if (Objects.equals(color, "black")) {
+        } else if (Objects.equals(this.color, "black")) {
             return new ImageView(black_pawn);
         }
         return null;
