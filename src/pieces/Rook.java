@@ -1,23 +1,38 @@
 package pieces;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * Class for Rook objects, which extends PiecesInterface
+ * This class contains all the logic and properties that a rook piece in the game has
+ * Rosaline Flowers
+ */
 public class Rook implements PiecesInterface {
     Image white_rook = new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/white_rook.png")));
     Image black_rook = new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/black_rook.png")));
     private final String color;
     private final String value;
 
+    /**
+     * Constructor for the rook
+     * @param color the rook's color
+     */
     public Rook(String color) {
         this.color = color;
         this.value = "Rook";
     }
 
+    /**
+     * Determines if the rook is moving in a straight line and if there are no pieces in that path
+     * If either of those are not true, the method returns false
+     * @param outgoingLocation the coordinates the piece is leaving from
+     * @param incomingLocation the coordinates the piece is going to
+     * @param board the hashmap containing the data of the chess board
+     * @return bool
+     */
     @Override
     public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
         //horizontal movement
@@ -70,11 +85,19 @@ public class Rook implements PiecesInterface {
         return false;
     }
 
+    /**
+     * Returns the color of the piece
+     * @return String color
+     */
     @Override
     public String getColor() {
         return color;
     }
 
+    /**
+     * Returns the rook's image, changing it based on its color
+     * @return Image
+     */
     @Override
     public ImageView getGraphic() {
         if (Objects.equals(this.color, "white")) {
@@ -85,6 +108,10 @@ public class Rook implements PiecesInterface {
         return null;
     }
 
+    /**
+     * Returns the string value of the piece (basically its name)
+     * @return String value
+     */
     @Override
     public String getValue() {
         return value;

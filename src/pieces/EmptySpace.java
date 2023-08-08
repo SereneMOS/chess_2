@@ -1,12 +1,15 @@
 package pieces;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * Class for EmptySpace objects, which extends PiecesInterface
+ * Though not an actual piece per se, this class is designed to function like an empty space
+ * Rosaline Flowers
+ */
 public class EmptySpace implements PiecesInterface {
     Image space = new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/space_3.png")));
     private final String value;

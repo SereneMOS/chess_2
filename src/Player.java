@@ -1,28 +1,48 @@
 import pieces.*;
-
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Class that instantiates the fields and methods for Player objects
+ * These objects simulate the individual players, as well as their collection of pieces
+ * Rosaline Flowers
+ */
 public class Player {
     private final ArrayList<PiecesInterface> pieces;
-    private final ArrayList<PiecesInterface> captured_pieces;
+    private final ArrayList<PiecesInterface> capturedPieces;
     public String color;
 
+    /**
+     * Player constructor
+     * @param color the color (or team, really) of the player
+     */
     public Player(String color) {
-        this.captured_pieces = null;
+        this.capturedPieces = null;
         this.pieces = populateInitialPieces();
         this.color = color;
     }
 
+    /**
+     * Adds a captured enemy piece to the player's list of captured pieces
+     * @param capturedPiece the piece that was captured
+     */
     public void enemyPieceCaptured(PiecesInterface capturedPiece) {
-        captured_pieces.add(capturedPiece);
+        capturedPieces.add(capturedPiece);
     }
 
+    /**
+     * Removes a piece from the player when it is captured
+     * @param lostPiece the piece that was lost
+     */
     public void pieceLost(PiecesInterface lostPiece) {
         pieces.remove(lostPiece);
     }
 
+    /**
+     * Adds all the pieces the player will be starting with to their list
+     * The pieces' color changes depending on the player's
+     * @return ArrayList<PiecesInterface> startingPieces
+     */
     public ArrayList<PiecesInterface> populateInitialPieces() {
         ArrayList<PiecesInterface> startingPieces = new ArrayList<>();
         if (Objects.equals(color, "white")) {
@@ -53,11 +73,23 @@ public class Player {
         return startingPieces;
     }
 
+    /**
+     * Returns the player's current list of pieces
+     * @return ArrayList<PiecesInterface> pieces
+     */
     public ArrayList<PiecesInterface> getPieces() {
         return pieces;
     }
 
-    public ArrayList<PiecesInterface> getCapturedPieces(){return captured_pieces;}
+    /**
+     * Returns the list of pieces the player has captured
+     * @return ArrayList<PiecesInterface> capturedPieces
+     */
+    public ArrayList<PiecesInterface> getCapturedPieces(){return capturedPieces;}
 
+    /**
+     * Returns the player's color
+     * @return String color
+     */
     public String getColor(){return color;}
 }

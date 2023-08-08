@@ -1,28 +1,33 @@
 import pieces.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * Class defining the board that the chess game is played on
+ * Methods for populating the board with pieces, creating players, and returning formalized coordinates
+ * Rosaline Flowers
+ */
 public class Board {
-    /**
-     * Class defining the board
-     * Methods for populating the board with pieces and toString
-     * Rosaline Flowers
-     */
-    private final int ROWS;
-    private final int COL;
+    private final int rows;
+    private final int columns;
     HashMap<ArrayList<Integer>, PiecesInterface> board = new HashMap<>();
     private String turn;
     private final Player player1 = new Player("white");
     private final Player player2 = new Player("black");
 
+    /**
+     * Board constructor
+     * Creates instances of PieceInterface children to add to the board hashmap, thus simulating a chess board
+     * @param rows number of rows on the board
+     * @param columns number of columns on the board
+     */
     public Board(int rows, int columns) {
-        this.ROWS = rows;
-        this.COL = columns;
+        this.rows = rows;
+        this.columns = columns;
         //create an empty board of the provided dimensions
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COL; j++) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
                 ArrayList<Integer> coords = new ArrayList<>();
                 coords.add(i);
                 coords.add(j);
@@ -91,10 +96,9 @@ public class Board {
         turn = "white";
     }
 
-    public HashMap<ArrayList<Integer>, PiecesInterface> getBoard() {
-        return board;
-    }
-
+    /**
+     * Changes to the next person's turn
+     */
     public void changeTurn() {
         if (Objects.equals(turn, "white")) {
             turn = "black";
@@ -103,10 +107,12 @@ public class Board {
         }
     }
 
-    public String getTurn() {
-        return turn;
-    }
-
+    /**
+     * Produces the "formalized" coordinates of the paramters (ie, a1 for 0,8)
+     * @param outgoing the coordinates the piece is leaving from
+     * @param incoming the coordinates the piece is heading to
+     * @return String properCoords
+     */
     public String produceProperCoords(ArrayList<Integer> outgoing, ArrayList<Integer> incoming) {
         String properCoords = "";
         String firstCoord = switch (outgoing.get(0)) {
@@ -157,6 +163,11 @@ public class Board {
         return properCoords;
     }
 
+    /**
+     * Returns a player object based on which color is requested
+     * @param color the color of the desired player
+     * @return Player
+     */
     public Player getPlayer(String color) {
         if (Objects.equals(color, "white")) {
             return player1;
@@ -166,10 +177,26 @@ public class Board {
         return null;
     }
 
+    /**
+     * Returns whose turn it is
+     * @return String turn
+     */
+    public String getTurn() {
+        return turn;
+    }
+
+    /**
+     * Returns the board hashmap
+     * @return Board
+     */
+    public HashMap<ArrayList<Integer>, PiecesInterface> getBoard() {
+        return board;
+    }
+
     public String toString() {
         StringBuilder printer = new StringBuilder();
-        for (int i = 0; i < this.ROWS; i++) {
-            for (int j = 0; j < this.COL; j++) {
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.columns; j++) {
                 ArrayList<Integer> coords = new ArrayList<>();
                 coords.add(i);
                 coords.add(j);
