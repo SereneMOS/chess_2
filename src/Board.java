@@ -105,6 +105,56 @@ public class Board {
         return turn;
     }
 
+    public String produceProperCoords(ArrayList<Integer> outgoing, ArrayList<Integer> incoming) {
+        String properCoords = "";
+        String firstCoord = switch (outgoing.get(0)) {
+            case 0 -> "8";
+            case 1 -> "7";
+            case 2 -> "6";
+            case 3 -> "5";
+            case 4 -> "4";
+            case 5 -> "3";
+            case 6 -> "2";
+            case 7 -> "1";
+            default -> "";
+        };
+        String secondCoord = switch (outgoing.get(1)) {
+            case 0 -> "a";
+            case 1 -> "b";
+            case 2 -> "c";
+            case 3 -> "d";
+            case 4 -> "e";
+            case 5 -> "f";
+            case 6 -> "g";
+            case 7 -> "h";
+            default -> "";
+        };
+        String thirdCoord = switch (incoming.get(0)) {
+            case 0 -> "8";
+            case 1 -> "7";
+            case 2 -> "6";
+            case 3 -> "5";
+            case 4 -> "4";
+            case 5 -> "3";
+            case 6 -> "2";
+            case 7 -> "1";
+            default -> "";
+        };
+        String fourthCoord = switch (incoming.get(1)) {
+            case 0 -> "a";
+            case 1 -> "b";
+            case 2 -> "c";
+            case 3 -> "d";
+            case 4 -> "e";
+            case 5 -> "f";
+            case 6 -> "g";
+            case 7 -> "h";
+            default -> "";
+        };
+        properCoords = firstCoord + secondCoord + " to " + thirdCoord + fourthCoord;
+        return properCoords;
+    }
+
     public String toString() {
         StringBuilder printer = new StringBuilder();
         for (int i = 0; i < this.ROWS; i++) {
