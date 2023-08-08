@@ -19,11 +19,9 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application {
-    //TODO create a more expansive GUI, with turn order, pieces captured, and a title
-    //TODO update Player and Board so that their backend logic syncs with the GUI
     //TODO update documentation and styling across the project
     //TODO establish win condition (checkmate)
-    //TODO modify the gui and button's graphics to be more consistent with a real chess board
+    //TODO gui round 2
     //TODO add in the pawn's first move double jump rule and diagonal only capture
 
     ArrayList<Integer> selectedCoordinates = null;
@@ -88,8 +86,12 @@ public class GUI extends Application {
                         if (!Objects.equals(boardValues.get(selectedCoordinates).getColor(), boardValues.get(val).getColor())) {
                             if (Objects.equals(boardValues.get(val).getColor(), "white")) {
                                 blackCapturesFlow.getChildren().add(boardValues.get(val).getGraphic());
+                                board.getPlayer("black").enemyPieceCaptured(boardValues.get(val));
+                                board.getPlayer("white").pieceLost(boardValues.get(val));
                             } else if (Objects.equals(boardValues.get(val).getColor(), "black")) {
                                 whiteCapturesFlow.getChildren().add(boardValues.get(val).getGraphic());
+                                board.getPlayer("white").enemyPieceCaptured(boardValues.get(val));
+                                board.getPlayer("black").pieceLost(boardValues.get(val));
                             }
                             //swap the values of the two spaces in the hashmap
                             boardValues.replace(val, boardValues.get(selectedCoordinates));

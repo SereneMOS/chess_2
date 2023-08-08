@@ -5,13 +5,13 @@
  */
 
 public class Main {
-    Player PLAYER_1 = new Player(1);
-    Player PLAYER_2 = new Player(2);
+    Player PLAYER_1 = new Player("white");
+    Player PLAYER_2 = new Player("black");
 
     public boolean someoneHasWon() {
-        if (PLAYER_1.getPIECES().isEmpty()) {
+        if (PLAYER_1.getPieces().isEmpty()) {
             return true;
-        } else return PLAYER_2.getPIECES().isEmpty();
+        } else return PLAYER_2.getPieces().isEmpty();
     }
 
     public void beginGame() {

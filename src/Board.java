@@ -14,6 +14,8 @@ public class Board {
     private final int COL;
     HashMap<ArrayList<Integer>, PiecesInterface> board = new HashMap<>();
     private String turn;
+    private final Player player1 = new Player("white");
+    private final Player player2 = new Player("black");
 
     public Board(int rows, int columns) {
         this.ROWS = rows;
@@ -153,6 +155,15 @@ public class Board {
         };
         properCoords = firstCoord + secondCoord + " to " + thirdCoord + fourthCoord;
         return properCoords;
+    }
+
+    public Player getPlayer(String color) {
+        if (Objects.equals(color, "white")) {
+            return player1;
+        } else if (Objects.equals(color, "black")) {
+            return player2;
+        }
+        return null;
     }
 
     public String toString() {
