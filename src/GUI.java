@@ -24,7 +24,6 @@ import java.util.Objects;
  */
 public class GUI extends Application {
     //TODO establish win condition (checkmate)
-    //TODO create a new set of hashMaps that contain only the black and white pieces respectively
     //TODO gui round 2
     //TODO add in the pawn's first move double jump rule and diagonal only capture
     //TODO make it so that pawns can turn into other pieces when they reach the other side of the board

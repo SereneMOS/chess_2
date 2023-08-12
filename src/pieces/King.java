@@ -35,12 +35,16 @@ public class King implements PiecesInterface {
      */
     @Override
     public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
-                //upwards and downwards movement
-        return ((outgoingLocation.get(0) - incomingLocation.get(0) == 1 || outgoingLocation.get(0) - incomingLocation.get(0) == -1)
-                && (outgoingLocation.get(1) - incomingLocation.get(1) <= 1) && (outgoingLocation.get(1) - incomingLocation.get(1) >= -1))
-                //left and right movement
-                || (outgoingLocation.get(1) - incomingLocation.get(1) == 1 && outgoingLocation.get(0) - incomingLocation.get(0) == 0)
-                || (outgoingLocation.get(1) - incomingLocation.get(1) == -1 && outgoingLocation.get(0) - incomingLocation.get(0) == 0);
+        if (!isInCheckOrMate(incomingLocation, board)) {
+            //upwards and downwards movement
+            return ((outgoingLocation.get(0) - incomingLocation.get(0) == 1 || outgoingLocation.get(0) - incomingLocation.get(0) == -1)
+                    && (outgoingLocation.get(1) - incomingLocation.get(1) <= 1) && (outgoingLocation.get(1) - incomingLocation.get(1) >= -1))
+                    //left and right movement
+                    || (outgoingLocation.get(1) - incomingLocation.get(1) == 1 && outgoingLocation.get(0) - incomingLocation.get(0) == 0)
+                    || (outgoingLocation.get(1) - incomingLocation.get(1) == -1 && outgoingLocation.get(0) - incomingLocation.get(0) == 0);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -50,7 +54,7 @@ public class King implements PiecesInterface {
      * If not, then the king is in checkmate
      * Notes: Only one piece (lol) can actually threaten a king at a time. Other pieces can block off escape options, but only one
      * can actually have a line of attack on a king
-     * A king should not be able to move itself into check or checkmate
+     * A king should not be able to move itself into check or checkmate, nor should a piece be able to move such that it puts its king in check
      * The only move a player can make when their king is in check is to get out of it
      * @param currentLocation
      * @param board
@@ -59,8 +63,12 @@ public class King implements PiecesInterface {
     public boolean isInCheckOrMate(ArrayList<Integer> currentLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
             for (ArrayList<Integer> enemyPiece : board.keySet()) {
                 if (!Objects.equals(board.get(enemyPiece).getColor(), this.color) && !Objects.equals(board.get(enemyPiece).getValue(), ".")) {
-                    if (board.get(enemyPiece).isValidMove(enemyPiece, currentLocation, board)) {
-                        return true;
+                    if (Objects.equals(board.get(enemyPiece).getValue(), "King")) {
+                        System.out.println("Enemy King");
+                    } else {
+                        if (board.get(enemyPiece).isValidMove(enemyPiece, currentLocation, board)) {
+                            return true;
+                        }
                     }
                 }
             }
