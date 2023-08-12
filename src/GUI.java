@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import pieces.EmptySpace;
+import pieces.King;
 import pieces.PiecesInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,8 @@ import java.util.Objects;
  */
 public class GUI extends Application {
     //TODO establish win condition (checkmate)
+    //TODO create a new set of hashMaps that contain only the black and white pieces respectively
+    //TODO weird rook capture glitch?
     //TODO gui round 2
     //TODO add in the pawn's first move double jump rule and diagonal only capture
     //TODO make it so that pawns can turn into other pieces when they reach the other side of the board
@@ -42,13 +45,13 @@ public class GUI extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //stage and title
         primaryStage.setTitle("Chess 2");
         //center grid pane which contains the actual chess board
         GridPane center = new GridPane();
         center.setHgap(11);
         center.setVgap(11);
         center.setPadding(new Insets(7,7,7,7));
+
         //content that is on the left side of the border
         Label turnLabel = new Label("Current turn: " + board.getTurn());
         Label selectedPieceLabel = new Label("Selected Piece: None");
@@ -59,6 +62,7 @@ public class GUI extends Application {
         FlowPane movesList = new FlowPane();
         movesList.setOrientation(Orientation.VERTICAL);
         Label winnerLabel = new Label("");
+
         //content that is on the right side of the border
         FlowPane blackCapturesFlow = new FlowPane();
         blackCapturesFlow.setPrefWrapLength(150);
@@ -68,6 +72,7 @@ public class GUI extends Application {
         FlowPane whiteCapturesFlow = new FlowPane();
         whiteCapturesFlow.setPrefWrapLength(150);
         whiteCapturesFlow.setHgap(7);
+
         //this loop runs through every spot on the chess board and creates a button for it
         for (ArrayList<Integer> val : boardValues.keySet()) {
             //button is created and given its initial graphic
@@ -128,6 +133,23 @@ public class GUI extends Application {
                             //the originally selected button needs to update to an empty space
                             selectedButton.setGraphic(boardValues.get(selectedCoordinates).getGraphic());
 
+                            if (Objects.equals(boardValues.get(val).getValue(), "King")) {
+                                if (Objects.equals(board.getTurn(), "white")) {
+                                    board.setWhiteKingCoordinates(val);
+                                } else if (Objects.equals(board.getTurn(), "black")) {
+                                    board.setBlackKingCoordinates(val);
+                                }
+                            }
+                            if (Objects.equals(board.getTurn(), "black")) {
+                                if (new King("white").isInCheckOrMate(board.getWhiteKingCoordinates(), boardValues)) {
+                                    System.out.println("White King is in Check");
+                                }
+                            } else if (Objects.equals(board.getTurn(), "white")) {
+                                if (new King("black").isInCheckOrMate(board.getBlackKingCoordinates(), boardValues)) {
+                                    System.out.println("Black King is in Check");
+                                }
+                            }
+
                             //console output
                             System.out.println("Original cell: " + selectedCoordinates + " , " + boardValues.get(selectedCoordinates));
                             System.out.println("Destination cell: " + val + " , " + boardValues.get(val));
@@ -181,6 +203,7 @@ public class GUI extends Application {
         leftBox.getChildren().add(turnLabel);
         leftBox.getChildren().add(selectedPieceLabel);
         leftBox.getChildren().add(recentMoves);
+        leftBox.getChildren().add(winnerLabel);
 
         //all the content at the top of the border pane
         HBox topBox = new HBox();

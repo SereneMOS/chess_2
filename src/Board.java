@@ -15,6 +15,10 @@ public class Board {
     private String turn;
     private final Player player1 = new Player("white");
     private final Player player2 = new Player("black");
+    private ArrayList<Integer> whiteKingCoordinates = new ArrayList<>();
+    private ArrayList<Integer> blackKingCoordinates = new ArrayList<>();
+    HashMap<ArrayList<Integer>, PiecesInterface> whitePieces = new HashMap<>();
+    HashMap<ArrayList<Integer>, PiecesInterface> blackPieces = new HashMap<>();
 
     /**
      * Board constructor
@@ -23,6 +27,10 @@ public class Board {
      * @param columns number of columns on the board
      */
     public Board(int rows, int columns) {
+        whiteKingCoordinates.add(7);
+        whiteKingCoordinates.add(4);
+        blackKingCoordinates.add(0);
+        blackKingCoordinates.add(4);
         this.rows = rows;
         this.columns = columns;
         //create an empty board of the provided dimensions
@@ -191,6 +199,22 @@ public class Board {
      */
     public HashMap<ArrayList<Integer>, PiecesInterface> getBoard() {
         return board;
+    }
+
+    public void setBlackKingCoordinates(ArrayList<Integer> blackKingCoordinates) {
+        this.blackKingCoordinates = blackKingCoordinates;
+    }
+
+    public void setWhiteKingCoordinates(ArrayList<Integer> whiteKingCoordinates) {
+        this.whiteKingCoordinates = whiteKingCoordinates;
+    }
+
+    public ArrayList<Integer> getBlackKingCoordinates() {
+        return blackKingCoordinates;
+    }
+
+    public ArrayList<Integer> getWhiteKingCoordinates() {
+        return whiteKingCoordinates;
     }
 
     public String toString() {

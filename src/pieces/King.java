@@ -44,6 +44,30 @@ public class King implements PiecesInterface {
     }
 
     /**
+     * First, determine if a king is in check- to do so, determine if any enemy piece has a viable line of attack to that king
+     * Second, once the king is determined to be in check, then determine if the king has any move that will allow it to break check
+     * If not, then we need to determine if there are any ally pieces which could move in and break check
+     * If not, then the king is in checkmate
+     * Notes: Only one piece (lol) can actually threaten a king at a time. Other pieces can block off escape options, but only one
+     * can actually have a line of attack on a king
+     * A king should not be able to move itself into check or checkmate
+     * The only move a player can make when their king is in check is to get out of it
+     * @param currentLocation
+     * @param board
+     * @return
+     */
+    public boolean isInCheckOrMate(ArrayList<Integer> currentLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
+            for (ArrayList<Integer> enemyPiece : board.keySet()) {
+                if (!Objects.equals(board.get(enemyPiece).getColor(), this.color) && !Objects.equals(board.get(enemyPiece).getValue(), ".")) {
+                    if (board.get(enemyPiece).isValidMove(enemyPiece, currentLocation, board)) {
+                        return true;
+                    }
+                }
+            }
+        return false;
+    }
+
+    /**
      * Returns the color of the piece
      * @return String color
      */

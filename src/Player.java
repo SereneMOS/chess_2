@@ -11,6 +11,7 @@ public class Player {
     private final ArrayList<PiecesInterface> pieces;
     private final ArrayList<PiecesInterface> capturedPieces;
     public String color;
+    public King king;
 
     /**
      * Player constructor
@@ -56,7 +57,8 @@ public class Player {
             startingPieces.add(new Bishop("white"));
             startingPieces.add(new Bishop("white"));
             startingPieces.add(new Queen("white"));
-            startingPieces.add(new King("white"));
+            king = new King("white");
+            startingPieces.add(king);
         } else if (Objects.equals(color, "black")) {
             for (int i = 0; i < 8; i++) {
                 startingPieces.add(new Pawn("black"));
@@ -68,7 +70,8 @@ public class Player {
             startingPieces.add(new Bishop("black"));
             startingPieces.add(new Bishop("black"));
             startingPieces.add(new Queen("black"));
-            startingPieces.add(new King("black"));
+            king = new King("black");
+            startingPieces.add(king);
         }
         return startingPieces;
     }
@@ -92,4 +95,6 @@ public class Player {
      * @return String color
      */
     public String getColor(){return color;}
+
+    public King getKing(){return king;}
 }
