@@ -25,7 +25,6 @@ import java.util.Objects;
 public class GUI extends Application {
     //TODO establish win condition (checkmate)
     //TODO create a new set of hashMaps that contain only the black and white pieces respectively
-    //TODO weird rook capture glitch?
     //TODO gui round 2
     //TODO add in the pawn's first move double jump rule and diagonal only capture
     //TODO make it so that pawns can turn into other pieces when they reach the other side of the board
@@ -111,13 +110,13 @@ public class GUI extends Application {
                         //checks if the current incoming and outgoing pieces are not the same color
                         if (!Objects.equals(boardValues.get(selectedCoordinates).getColor(), boardValues.get(val).getColor())) {
 
-                            //if the current piece is white and the previously selected on is black
+                            //if the current piece is white and the previously selected one is black
                             if (Objects.equals(boardValues.get(val).getColor(), "white")) {
                                 //the current piece is captured and its graphic is added to the capture panel
                                 blackCapturesFlow.getChildren().add(boardValues.get(val).getGraphic());
                                 board.getPlayer("black").enemyPieceCaptured(boardValues.get(val));
                                 board.getPlayer("white").pieceLost(boardValues.get(val));
-                                //if the current piece is black and the previously selected on is white
+                                //if the current piece is black and the previously selected one is white
                             } else if (Objects.equals(boardValues.get(val).getColor(), "black")) {
                                 //the current piece is captured and its graphic is added to the capture panel
                                 whiteCapturesFlow.getChildren().add(boardValues.get(val).getGraphic());

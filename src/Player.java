@@ -18,7 +18,7 @@ public class Player {
      * @param color the color (or team, really) of the player
      */
     public Player(String color) {
-        this.capturedPieces = null;
+        this.capturedPieces = new ArrayList<>();
         this.pieces = populateInitialPieces();
         this.color = color;
     }
