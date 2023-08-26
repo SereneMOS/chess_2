@@ -54,8 +54,8 @@ public class GUI extends Application {
         Label turnLabel = new Label("Current turn: " + board.getTurn());
         Label selectedPieceLabel = new Label("Selected Piece: None");
         ScrollPane recentMoves = new ScrollPane();
-        recentMoves.setMaxHeight(100);
-        recentMoves.setPrefWidth(150);
+        recentMoves.setMaxHeight(250);
+        recentMoves.setPrefWidth(200);
         recentMoves.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         FlowPane movesList = new FlowPane();
         movesList.setOrientation(Orientation.VERTICAL);
@@ -63,12 +63,12 @@ public class GUI extends Application {
 
         //content that is on the right side of the border
         FlowPane blackCapturesFlow = new FlowPane();
-        blackCapturesFlow.setPrefWrapLength(150);
+        blackCapturesFlow.setPrefWrapLength(250);
         blackCapturesFlow.setHgap(7);
         blackCapturesFlow.setMaxHeight(10);
         blackCapturesFlow.setMinHeight(10);
         FlowPane whiteCapturesFlow = new FlowPane();
-        whiteCapturesFlow.setPrefWrapLength(150);
+        whiteCapturesFlow.setPrefWrapLength(250);
         whiteCapturesFlow.setHgap(7);
 
         //this loop runs through every spot on the chess board and creates a button for it
@@ -176,32 +176,36 @@ public class GUI extends Application {
         }
         //all the content on the right side of the border pane
         VBox rightBox = new VBox();
-        rightBox.setSpacing(200);
         VBox blackCapturesBox = new VBox();
         Label blackCapturesLabel = new Label("White pieces captured:");
+        blackCapturesLabel.setUnderline(true);
         blackCapturesLabel.setFont(Font.font("Constantia", 15));
         blackCapturesBox.getChildren().add(blackCapturesLabel);
         blackCapturesBox.getChildren().add(blackCapturesFlow);
         VBox whiteCapturesBox = new VBox();
         Label whiteCapturesLabel = new Label("Black pieces captured:");
+        whiteCapturesLabel.setUnderline(true);
         whiteCapturesLabel.setFont(Font.font("Constantia", 15));
         whiteCapturesBox.getChildren().add(whiteCapturesLabel);
         whiteCapturesBox.getChildren().add(whiteCapturesFlow);
         whiteCapturesBox.setAlignment(Pos.BOTTOM_LEFT);
-        rightBox.getChildren().add(blackCapturesBox);
-        rightBox.getChildren().add(whiteCapturesBox);
+        VBox.setMargin(blackCapturesBox, new Insets(10, 10, 10, 10));
+        VBox.setMargin(whiteCapturesBox, new Insets(10, 10, 10, 10));
+        recentMoves.setContent(movesList);
+        VBox rightTopBox = new VBox();
+        rightTopBox.getChildren().add(blackCapturesBox);
+        rightTopBox.getChildren().add(whiteCapturesBox);
+        rightTopBox.setBackground(new Background(new BackgroundFill(Color.KHAKI, null ,null)));
+        rightTopBox.setPrefHeight(325);
+        rightTopBox.setSpacing(100);
+        rightTopBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
+        rightBox.setSpacing(20);
+        rightBox.getChildren().add(rightTopBox);
+        rightBox.getChildren().add(recentMoves);
 
         //all the content on the left side of the border pane
-        VBox leftBox = new VBox();
-        leftBox.setPrefWidth(150);
-        leftBox.setFillWidth(false);
-        turnLabel.setFont(Font.font("Constantia", 15));
-        selectedPieceLabel.setFont(Font.font("Constantia", 15));
-        recentMoves.setContent(movesList);
-        leftBox.getChildren().add(turnLabel);
-        leftBox.getChildren().add(selectedPieceLabel);
-        leftBox.getChildren().add(recentMoves);
-        leftBox.getChildren().add(winnerLabel);
+        HBox bottomBox = new HBox();
+        bottomBox.setPrefWidth(150);
 
         //all the content at the top of the border pane
         HBox topBox = new HBox();
@@ -221,20 +225,25 @@ public class GUI extends Application {
                 throw new RuntimeException(e);
             }
         });
-        topBox.setSpacing(10);
-        topBox.setAlignment(Pos.CENTER);
+        turnLabel.setFont(Font.font("Constantia", 15));
+        selectedPieceLabel.setFont(Font.font("Constantia", 15));
+        topBox.setSpacing(20);
+        topBox.getChildren().add(turnLabel);
+        topBox.getChildren().add(selectedPieceLabel);
+        topBox.getChildren().add(winnerLabel);
         topBox.getChildren().add(titleLabel);
         topBox.getChildren().add(newGame);
 
         //the border pane and its formatting
         BorderPane borderPane = new BorderPane(center);
         center.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
-        BorderPane.setMargin(center, new Insets(20, 0, 10, 0));
+        BorderPane.setMargin(center, new Insets(20, 0, 10, 20));
         borderPane.setRight(rightBox);
         BorderPane.setMargin(rightBox, new Insets(10, 10, 0, 20));
         borderPane.setTop(topBox);
-        borderPane.setLeft(leftBox);
-        BorderPane.setMargin(leftBox, new Insets(10, 20, 0, 10));
+        BorderPane.setMargin(topBox, new Insets(10, 5, 0, 5));
+        borderPane.setBottom(bottomBox);
+        BorderPane.setMargin(bottomBox, new Insets(10, 20, 0, 10));
         borderPane.setBackground(new Background(new BackgroundFill(Color.DARKGOLDENROD, null ,null)));
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
