@@ -24,8 +24,11 @@ import java.util.Objects;
  */
 public class GUI extends Application {
     //TODO establish win condition (checkmate)
+        //TODO check if an allied piece can block LOS for piece putting King in check
+        //TODO check if King can move out of check
+        //TODO prevent allied pieces from moving in a way that puts King in check
     //TODO gui round 2
-    //TODO add in the pawn's first move double jump rule and diagonal only capture
+    //TODO add in the pawn's diagonal only capture
     //TODO make it so that pawns can turn into other pieces when they reach the other side of the board
 
     ArrayList<Integer> selectedCoordinates = null;

@@ -15,6 +15,7 @@ public class Pawn implements PiecesInterface {
     Image black_pawn = new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/black_pawn.png")));
     private final String color;
     private final String value;
+    private boolean hasMoved;
 
     /**
      * The constructor for the pawn
@@ -23,6 +24,7 @@ public class Pawn implements PiecesInterface {
     public Pawn(String color) {
         this.color = color;
         this.value = "Pawn";
+        this.hasMoved = false;
     }
 
     /**
@@ -36,11 +38,24 @@ public class Pawn implements PiecesInterface {
      */
     @Override
     public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
-        //this configuration doesn't currently account for the first turn, two spaces rule
         if (Objects.equals(color, "white")) {
-            return outgoingLocation.get(0) - incomingLocation.get(0) == 1 && outgoingLocation.get(1) - incomingLocation.get(1) == 0;
+            //check if there is an enemy piece in front of the pawn
+            //then check if there are enemy pieces diagonal to the pawn
+            if (outgoingLocation.get(0) - incomingLocation.get(0) == 2 && outgoingLocation.get(1) - incomingLocation.get(1) == 0 && !hasMoved) {
+                hasMoved = true;
+                return true;
+            } else if (outgoingLocation.get(0) - incomingLocation.get(0) == 1 && outgoingLocation.get(1) - incomingLocation.get(1) == 0) {
+                hasMoved = true;
+                return true;
+            }
         } else if (Objects.equals(color, "black")) {
-            return outgoingLocation.get(0) - incomingLocation.get(0) == -1 && outgoingLocation.get(1) - incomingLocation.get(1) == 0;
+            if (outgoingLocation.get(0) - incomingLocation.get(0) == -2 && outgoingLocation.get(1) - incomingLocation.get(1) == 0 && !hasMoved) {
+                hasMoved = true;
+                return true;
+            } else if (outgoingLocation.get(0) - incomingLocation.get(0) == -1 && outgoingLocation.get(1) - incomingLocation.get(1) == 0) {
+                hasMoved = true;
+                return true;
+            }
         }
         return false;
     }
