@@ -39,20 +39,30 @@ public class Pawn implements PiecesInterface {
     @Override
     public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
         if (Objects.equals(color, "white")) {
-            //check if there is an enemy piece in front of the pawn
-            //then check if there are enemy pieces diagonal to the pawn
-            if (outgoingLocation.get(0) - incomingLocation.get(0) == 2 && outgoingLocation.get(1) - incomingLocation.get(1) == 0 && !hasMoved) {
+            if (outgoingLocation.get(0) - incomingLocation.get(0) == 1 && (outgoingLocation.get(1) - incomingLocation.get(1) == 1
+                    || outgoingLocation.get(1) - incomingLocation.get(1) == -1) && Objects.equals(board.get(incomingLocation).getColor(), "black")) {
+                return true;
+            }
+            if (outgoingLocation.get(0) - incomingLocation.get(0) == 2 && outgoingLocation.get(1) - incomingLocation.get(1) == 0
+                    && !hasMoved && Objects.equals(board.get(incomingLocation).getValue(), ".")) {
                 hasMoved = true;
                 return true;
-            } else if (outgoingLocation.get(0) - incomingLocation.get(0) == 1 && outgoingLocation.get(1) - incomingLocation.get(1) == 0) {
+            } else if (outgoingLocation.get(0) - incomingLocation.get(0) == 1 && outgoingLocation.get(1) - incomingLocation.get(1) == 0
+                    && Objects.equals(board.get(incomingLocation).getValue(), ".")) {
                 hasMoved = true;
                 return true;
             }
         } else if (Objects.equals(color, "black")) {
-            if (outgoingLocation.get(0) - incomingLocation.get(0) == -2 && outgoingLocation.get(1) - incomingLocation.get(1) == 0 && !hasMoved) {
+            if (outgoingLocation.get(0) - incomingLocation.get(0) == -1 && (outgoingLocation.get(1) - incomingLocation.get(1) == 1
+                    || outgoingLocation.get(1) - incomingLocation.get(1) == -1) && Objects.equals(board.get(incomingLocation).getColor(), "white")) {
+                return true;
+            }
+            if (outgoingLocation.get(0) - incomingLocation.get(0) == -2 && outgoingLocation.get(1) - incomingLocation.get(1) == 0
+                    && !hasMoved && Objects.equals(board.get(incomingLocation).getValue(), ".")) {
                 hasMoved = true;
                 return true;
-            } else if (outgoingLocation.get(0) - incomingLocation.get(0) == -1 && outgoingLocation.get(1) - incomingLocation.get(1) == 0) {
+            } else if (outgoingLocation.get(0) - incomingLocation.get(0) == -1 && outgoingLocation.get(1) - incomingLocation.get(1) == 0
+                    && Objects.equals(board.get(incomingLocation).getValue(), ".")) {
                 hasMoved = true;
                 return true;
             }
