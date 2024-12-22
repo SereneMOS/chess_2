@@ -35,7 +35,7 @@ public class King implements PiecesInterface {
      */
     @Override
     public boolean isValidMove(ArrayList<Integer> outgoingLocation, ArrayList<Integer> incomingLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
-        if (!isInCheckOrMate(incomingLocation, board)) {
+        if (Objects.equals(isInCheckOrMate(incomingLocation, board), "neither")) {
             //upwards and downwards movement
             return ((outgoingLocation.get(0) - incomingLocation.get(0) == 1 || outgoingLocation.get(0) - incomingLocation.get(0) == -1)
                     && (outgoingLocation.get(1) - incomingLocation.get(1) <= 1) && (outgoingLocation.get(1) - incomingLocation.get(1) >= -1))
@@ -60,19 +60,24 @@ public class King implements PiecesInterface {
      * @param board
      * @return
      */
-    public boolean isInCheckOrMate(ArrayList<Integer> currentLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
+    public String isInCheckOrMate(ArrayList<Integer> currentLocation, HashMap<ArrayList<Integer>, PiecesInterface> board) {
             for (ArrayList<Integer> enemyPiece : board.keySet()) {
                 if (!Objects.equals(board.get(enemyPiece).getColor(), this.color) && !Objects.equals(board.get(enemyPiece).getValue(), ".")) {
                     if (Objects.equals(board.get(enemyPiece).getValue(), "King")) {
                         System.out.println("Enemy King");
                     } else {
                         if (board.get(enemyPiece).isValidMove(enemyPiece, currentLocation, board)) {
-                            return true;
+                            for (ArrayList<Integer> alliedPiece : board.keySet()) {
+                                if (board.get(alliedPiece).isValidMove(alliedPiece, enemyPiece, board)) {
+                                    return "check";
+                                }
+                            }
+                            return "mate";
                         }
                     }
                 }
             }
-        return false;
+        return "neither";
     }
 
     /**

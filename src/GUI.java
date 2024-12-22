@@ -139,12 +139,16 @@ public class GUI extends Application {
                                 }
                             }
                             if (Objects.equals(board.getTurn(), "black")) {
-                                if (new King("white").isInCheckOrMate(board.getWhiteKingCoordinates(), boardValues)) {
+                                if (Objects.equals(new King("white").isInCheckOrMate(board.getWhiteKingCoordinates(), boardValues), "check")) {
                                     System.out.println("White King is in Check");
+                                } else if (Objects.equals(new King("white").isInCheckOrMate(board.getWhiteKingCoordinates(), boardValues), "mate")) {
+                                    System.out.println("White King is in Checkmate");
                                 }
                             } else if (Objects.equals(board.getTurn(), "white")) {
-                                if (new King("black").isInCheckOrMate(board.getBlackKingCoordinates(), boardValues)) {
+                                if (Objects.equals(new King("black").isInCheckOrMate(board.getBlackKingCoordinates(), boardValues), "check")) {
                                     System.out.println("Black King is in Check");
+                                } else if (Objects.equals(new King("black").isInCheckOrMate(board.getBlackKingCoordinates(), boardValues), "mate")) {
+                                    System.out.println("Black King is in Checkmate");
                                 }
                             }
 
